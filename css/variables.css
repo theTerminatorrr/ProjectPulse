@@ -22,6 +22,7 @@
   --danger-bg: rgba(231, 76, 60, 0.15);
   --info: #4DA8FF;
   --info-bg: rgba(77, 168, 255, 0.15);
+  --navy-gradient: linear-gradient(135deg, #0a1d36, #123C69, #1D5EA8);
 
   /* ---- Priority colors ---- */
   --priority-low: #2ecc71;

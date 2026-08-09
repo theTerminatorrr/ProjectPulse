@@ -63,3 +63,11 @@
 /* Report print area                                                      */
 /* ---------------------------------------------------------------------- */
 #reportsPrintArea .stat-grid { margin-bottom: var(--sp-4); }
+
+.hero-actions .btn-outline {
+  color: #fff;
+  border-color: rgba(255, 255, 255, 0.5);
+}
+.hero-actions .btn-outline:hover {
+  color: var(--accent);
+}

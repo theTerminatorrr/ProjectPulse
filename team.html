@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Team — ProjectPulse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="app-body" data-page="team">
+
+  <aside class="sidebar" id="sidebar">
+    <a href="dashboard.html" class="brand"><i class="fa-solid fa-diagram-project"></i><span>ProjectPulse</span></a>
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+      <a href="projects.html" class="nav-item"><i class="fa-solid fa-folder-open"></i><span>Projects</span></a>
+      <a href="tasks.html" class="nav-item"><i class="fa-solid fa-table-columns"></i><span>Tasks</span></a>
+      <a href="team.html" class="nav-item active" data-role-visible="leader"><i class="fa-solid fa-people-group"></i><span>Team</span></a>
+      <a href="messages.html" class="nav-item"><i class="fa-solid fa-message"></i><span>Messages</span></a>
+      <a href="feedback.html" class="nav-item"><i class="fa-solid fa-comments"></i><span>Feedback</span></a>
+      <a href="calendar.html" class="nav-item"><i class="fa-solid fa-calendar-days"></i><span>Calendar</span></a>
+      <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+      <a href="admin.html" class="nav-item" data-role-visible="admin"><i class="fa-solid fa-user-shield"></i><span>Admin</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      <button class="nav-item nav-item-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="topbar-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="globalSearch" placeholder="Search members..." />
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot" id="notifCount">0</span></button>
+        <div class="notif-dropdown" id="notifDropdown" hidden>
+          <div class="notif-dropdown-header"><h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button></div>
+          <ul class="notif-list" id="notifList"></ul>
+        </div>
+        <div class="profile-menu">
+          <button class="profile-trigger" id="profileTrigger">
+            <img src="images/avatar-placeholder.png" alt="" class="avatar-sm" id="topbarAvatar" />
+            <span id="topbarUserName">Loading…</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown" hidden>
+            <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            <button id="profileLogoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="page-header">
+        <div>
+          <h1>Team</h1>
+          <p class="text-muted">Manage your project roster.</p>
+        </div>
+        <button class="btn btn-primary" id="openAddMemberBtn"><i class="fa-solid fa-user-plus"></i> Add Member</button>
+      </div>
+
+      <div class="toolbar glass-card">
+        <div class="toolbar-search">
+          <i class="fa-solid fa-magnifying-glass"></i>
+          <input type="search" id="memberSearchInput" placeholder="Search members..." />
+        </div>
+        <div class="toolbar-filters">
+          <select id="teamProjectFilter" aria-label="Filter by project"><option value="">All projects</option></select>
+        </div>
+      </div>
+
+      <div class="member-grid" id="teamMemberGrid"></div>
+
+      <div class="glass-card" style="margin-top:var(--sp-4);">
+        <h3><i class="fa-solid fa-trophy"></i> Leaderboard</h3>
+        <p class="text-muted">Ranked by tasks completed across your projects.</p>
+        <table class="data-table" id="leaderboardTable">
+          <thead><tr><th>#</th><th>Member</th><th>Completed</th><th>Assigned</th><th>Badges</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="empty-state" id="teamEmptyState" hidden>
+        <i class="fa-solid fa-people-group"></i>
+        <h3>No team members yet</h3>
+        <p>Add members to start assigning tasks.</p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Add member modal -->
+  <div class="modal-overlay" id="addMemberModal" hidden>
+    <div class="modal glass-card" role="dialog" aria-modal="true" aria-labelledby="addMemberTitle">
+      <button class="modal-close" data-close-modal="addMemberModal" aria-label="Close">&times;</button>
+      <h3 id="addMemberTitle"><i class="fa-solid fa-user-plus"></i> Add Member to Project</h3>
+      <form id="addMemberForm" class="app-form">
+        <div class="form-group">
+          <label for="addMemberProject">Project</label>
+          <select id="addMemberProject" required></select>
+        </div>
+        <div class="form-group">
+          <label for="addMemberUser">Member (existing registered user)</label>
+          <select id="addMemberUser" required></select>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Add to Team</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Member profile modal -->
+  <div class="modal-overlay" id="memberProfileModal" hidden>
+    <div class="modal glass-card" role="dialog" aria-modal="true" aria-labelledby="memberProfileTitle">
+      <button class="modal-close" data-close-modal="memberProfileModal" aria-label="Close">&times;</button>
+      <div class="member-profile-header">
+        <img src="images/avatar-placeholder.png" alt="" class="avatar-lg" id="memberProfileAvatar" />
+        <div>
+          <h3 id="memberProfileName">Member Name</h3>
+          <span class="online-dot" id="memberOnlineStatus">Online</span>
+        </div>
+      </div>
+      <p class="text-muted" id="memberProfileEmail"></p>
+      <div class="member-profile-stats">
+        <div><strong id="memberProfileTasks">0</strong><span>Tasks</span></div>
+        <div><strong id="memberProfileCompleted">0</strong><span>Completed</span></div>
+      </div>
+      <div class="member-profile-actions" data-role-visible="leader">
+        <button class="btn btn-outline" id="makeLeaderBtn"><i class="fa-solid fa-crown"></i> Make Leader</button>
+        <button class="btn btn-danger-outline" id="removeMemberBtn"><i class="fa-solid fa-user-minus"></i> Remove from Team</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/data/storage.js"></script>
+  <script src="js/data/seed.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/projects.js"></script>
+  <script src="js/tasks.js"></script>
+  <script src="js/team.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

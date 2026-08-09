@@ -1,0 +1,13 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+.vscode/
+.idea/
+
+# If you ever add a build step or local tooling
+node_modules/
+npm-debug.log*
+.env
+
+# This project has no build output — everything in this repo is served as-is.

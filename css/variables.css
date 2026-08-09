@@ -1,0 +1,112 @@
+/* ==========================================================================
+   ProjectPulse — Design Tokens
+   Navy Blue Gradient theme. Every other stylesheet consumes these variables.
+   ========================================================================== */
+
+:root {
+  /* ---- Brand palette ---- */
+  --primary: #081C3A;
+  --secondary: #123C69;
+  --accent: #1D5EA8;
+  --highlight: #4DA8FF;
+
+  --bg-gradient: linear-gradient(135deg, #081C3A, #123C69, #1D5EA8);
+  --bg-gradient-soft: linear-gradient(160deg, rgba(18, 60, 105, 0.92), rgba(8, 28, 58, 0.96));
+
+  /* ---- Status colors ---- */
+  --success: #2ecc71;
+  --success-bg: rgba(46, 204, 113, 0.15);
+  --warning: #f5a623;
+  --warning-bg: rgba(245, 166, 35, 0.15);
+  --danger: #e74c3c;
+  --danger-bg: rgba(231, 76, 60, 0.15);
+  --info: #4DA8FF;
+  --info-bg: rgba(77, 168, 255, 0.15);
+
+  /* ---- Priority colors ---- */
+  --priority-low: #2ecc71;
+  --priority-medium: #f5a623;
+  --priority-high: #e74c3c;
+
+  /* ---- Text ---- */
+  --text-light: #e8f1fa;
+  --text-muted: #a0b8d0;
+  --text-dark: #0b1c2f;
+  --text-body: #1b2436;
+  --text-body-muted: #5c6b82;
+
+  /* ---- Surfaces (light content area) ---- */
+  --bg-app: #f4f7ff;
+  --bg-card: #ffffff;
+  --bg-card-alt: #f0f4fc;
+  --border-color: #e1e8f5;
+  --border-color-strong: #c9d6ec;
+
+  /* ---- Glassmorphism ---- */
+  --glass-bg: rgba(255, 255, 255, 0.66);
+  --glass-bg-dark: rgba(8, 28, 58, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.35);
+  --glass-blur: 16px;
+  --glass-shadow: 0 8px 32px rgba(8, 28, 58, 0.12);
+  --glass-shadow-strong: 0 16px 48px rgba(8, 28, 58, 0.22);
+
+  /* ---- Typography ---- */
+  --font-main: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --fs-xs: 0.75rem;
+  --fs-sm: 0.875rem;
+  --fs-base: 1rem;
+  --fs-md: 1.125rem;
+  --fs-lg: 1.375rem;
+  --fs-xl: 1.75rem;
+  --fs-2xl: 2.25rem;
+  --fs-3xl: 3rem;
+
+  /* ---- Spacing scale (8px base) ---- */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 16px;
+  --sp-4: 24px;
+  --sp-5: 32px;
+  --sp-6: 48px;
+  --sp-7: 64px;
+
+  /* ---- Radius ---- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-pill: 999px;
+
+  /* ---- Motion ---- */
+  --ease: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast: 150ms;
+  --dur-base: 250ms;
+  --dur-slow: 450ms;
+
+  /* ---- Layout ---- */
+  --sidebar-width: 260px;
+  --sidebar-width-collapsed: 84px;
+  --topbar-height: 72px;
+
+  /* ---- Z-index scale ---- */
+  --z-sidebar: 40;
+  --z-topbar: 30;
+  --z-dropdown: 50;
+  --z-modal-overlay: 60;
+  --z-modal: 61;
+  --z-toast: 70;
+}
+
+/* ---- Dark mode overrides (toggled via body.dark-mode) ---- */
+body.dark-mode {
+  --bg-app: #061729;
+  --bg-card: #0d2440;
+  --bg-card-alt: #0a1d36;
+  --border-color: #1b3a5c;
+  --border-color-strong: #24486e;
+  --text-body: #e8f1fa;
+  --text-body-muted: #a0b8d0;
+  --text-dark: #e8f1fa;
+  --glass-bg: rgba(13, 36, 64, 0.6);
+  --glass-border: rgba(255, 255, 255, 0.08);
+}

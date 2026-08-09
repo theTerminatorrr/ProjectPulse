@@ -1,0 +1,21 @@
+# Netlify deployment config for ProjectPulse.
+# This is a static multi-page site — no build step required.
+
+[build]
+  publish = "."
+  command = ""
+
+# Every HTML page is a real file (login.html, dashboard.html, ...), so no
+# SPA-style catch-all redirect is needed. This just gives a friendlier
+# 404 experience if someone hits an unknown path.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 404
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Frame-Options = "DENY"
+    X-Content-Type-Options = "nosniff"
+    Referrer-Policy = "strict-origin-when-cross-origin"

@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ProjectPulse — Student Project Management &amp; Teacher Feedback</title>
+  <meta name="description" content="ProjectPulse helps student teams plan projects, track tasks, and get structured teacher feedback — all in one dashboard." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <!-- AOS (Animate On Scroll) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.css" />
+
+  <!-- App styles -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+</head>
+<body class="landing-body">
+
+  <!-- ================= NAVBAR (public) ================= -->
+  <header class="public-navbar">
+    <a href="index.html" class="brand">
+      <i class="fa-solid fa-diagram-project"></i>
+      <span>ProjectPulse</span>
+    </a>
+    <nav class="public-nav-links">
+      <a href="index.html#features">Features</a>
+      <a href="index.html#roles">Roles</a>
+      <a href="index.html#how-it-works">How it works</a>
+    </nav>
+    <div class="public-nav-actions">
+      <a href="login.html" class="btn btn-ghost">Log in</a>
+      <a href="register.html" class="btn btn-primary">Get started</a>
+    </div>
+    <button class="mobile-nav-toggle" id="mobileNavToggle" aria-label="Open menu" aria-expanded="false">
+      <i class="fa-solid fa-bars"></i>
+    </button>
+  </header>
+
+  <!-- ================= HERO ================= -->
+  <section class="hero">
+    <div class="hero-inner" data-aos="fade-up">
+      <span class="eyebrow"><i class="fa-solid fa-graduation-cap"></i> Built for classroom teams</span>
+      <h1>Plan the project.<br />Track the work.<br />Close the feedback loop.</h1>
+      <p class="hero-sub">
+        ProjectPulse gives Team Leaders a place to break work into tasks, gives Members a clear
+        list of what's due, and gives Teachers a live view of every team's progress —
+        with feedback that never gets lost in a group chat.
+      </p>
+      <div class="hero-actions">
+        <a href="register.html" class="btn btn-primary btn-lg">Create your account <i class="fa-solid fa-arrow-right"></i></a>
+        <a href="login.html" class="btn btn-outline btn-lg">I already have an account</a>
+      </div>
+      <div class="hero-stats">
+        <div><strong>3</strong><span>Roles</span></div>
+        <div><strong>0</strong><span>Servers required</span></div>
+        <div><strong>100%</strong><span>Runs in your browser</span></div>
+      </div>
+    </div>
+    <div class="hero-visual" aria-hidden="true">
+      <div class="glass-card floating-card card-1">
+        <span class="badge badge-progress">In Progress</span>
+        <p>Design login page</p>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+      </div>
+      <div class="glass-card floating-card card-2">
+        <i class="fa-solid fa-comment-dots"></i>
+        <p>"Great progress — refine the color contrast."</p>
+        <span class="text-muted">— Teacher feedback</span>
+      </div>
+      <div class="glass-card floating-card card-3">
+        <canvas id="heroMiniChart" width="140" height="90" aria-hidden="true"></canvas>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= ROLES ================= -->
+  <section id="roles" class="section roles-section">
+    <h2 data-aos="fade-up">One workspace, three points of view</h2>
+    <p class="section-sub" data-aos="fade-up">Every role sees exactly what they need — nothing more.</p>
+    <div class="roles-grid">
+      <article class="glass-card role-card" data-aos="fade-up" data-aos-delay="0">
+        <i class="fa-solid fa-chalkboard-user"></i>
+        <h3>Teacher</h3>
+        <p>Monitor every project, leave structured feedback, approve milestones, and grade final work.</p>
+        <ul>
+          <li>View all projects &amp; task progress</li>
+          <li>Leave feedback and ratings</li>
+          <li>Approve or request changes</li>
+        </ul>
+      </article>
+      <article class="glass-card role-card" data-aos="fade-up" data-aos-delay="100">
+        <i class="fa-solid fa-user-tie"></i>
+        <h3>Team Leader</h3>
+        <p>Create the project, split it into tasks, assign teammates, and keep everyone on schedule.</p>
+        <ul>
+          <li>Create &amp; manage projects</li>
+          <li>Assign and prioritize tasks</li>
+          <li>Monitor team progress</li>
+        </ul>
+      </article>
+      <article class="glass-card role-card" data-aos="fade-up" data-aos-delay="200">
+        <i class="fa-solid fa-user"></i>
+        <h3>Team Member</h3>
+        <p>See exactly what's assigned, update progress as you work, and respond to feedback.</p>
+        <ul>
+          <li>View assigned tasks</li>
+          <li>Update status &amp; progress</li>
+          <li>Reply to teacher feedback</li>
+        </ul>
+      </article>
+    </div>
+  </section>
+
+  <!-- ================= FEATURES ================= -->
+  <section id="features" class="section features-section">
+    <h2 data-aos="fade-up">Everything a project team actually uses</h2>
+    <div class="features-grid">
+      <div class="feature-item" data-aos="fade-up"><i class="fa-solid fa-table-columns"></i><h4>Kanban board</h4><p>Drag tasks from To Do to Done.</p></div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="50"><i class="fa-solid fa-chart-pie"></i><h4>Live charts</h4><p>Progress, workload, and status at a glance.</p></div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="100"><i class="fa-solid fa-calendar-days"></i><h4>Calendar</h4><p>Deadlines, meetings, and submissions in one view.</p></div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="150"><i class="fa-solid fa-comments"></i><h4>Feedback threads</h4><p>Teacher comments with replies, categories, and priority.</p></div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="200"><i class="fa-solid fa-bell"></i><h4>Notifications</h4><p>Know the moment something changes.</p></div>
+      <div class="feature-item" data-aos="fade-up" data-aos-delay="250"><i class="fa-solid fa-file-export"></i><h4>Reports</h4><p>Printable, exportable project summaries.</p></div>
+    </div>
+  </section>
+
+  <!-- ================= HOW IT WORKS ================= -->
+  <section id="how-it-works" class="section how-section">
+    <h2 data-aos="fade-up">How it works</h2>
+    <ol class="how-steps">
+      <li data-aos="fade-up"><span class="step-num">1</span><div><h4>Create your account</h4><p>Register as a Team Leader or Team Member and pick your team.</p></div></li>
+      <li data-aos="fade-up" data-aos-delay="100"><span class="step-num">2</span><div><h4>Set up the project</h4><p>Leaders create the project and break it into assignable tasks.</p></div></li>
+      <li data-aos="fade-up" data-aos-delay="200"><span class="step-num">3</span><div><h4>Track &amp; get feedback</h4><p>Members update progress; Teachers review and respond.</p></div></li>
+    </ol>
+  </section>
+
+  <!-- ================= CTA ================= -->
+  <section class="section cta-section" data-aos="zoom-in">
+    <div class="glass-card cta-card">
+      <h2>Ready to run your next project properly?</h2>
+      <p>No installs, no backend, no cost — just open the app and start.</p>
+      <a href="register.html" class="btn btn-primary btn-lg">Create your account</a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="public-footer">
+    <div class="footer-brand"><i class="fa-solid fa-diagram-project"></i> ProjectPulse</div>
+    <p>Student Project Management &amp; Teacher Feedback System</p>
+    <p class="text-muted">Built with HTML, CSS &amp; vanilla JavaScript.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.1/aos.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

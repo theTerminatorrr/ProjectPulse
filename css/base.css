@@ -1,0 +1,148 @@
+/* ==========================================================================
+   ProjectPulse — Base / Reset / Typography
+   ========================================================================== */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+/* Safety net: nothing on any page should ever be able to force horizontal
+   scroll — if it does, this hides the overflow instead of revealing a gap
+   of raw background color at the edge of the screen on mobile. */
+html, body { overflow-x: hidden; max-width: 100%; }
+
+body {
+  font-family: var(--font-main);
+  font-size: var(--fs-base);
+  color: var(--text-body);
+  background: var(--bg-app);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; display: block; }
+
+a { color: inherit; text-decoration: none; }
+
+button, input, select, textarea {
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+}
+
+button { cursor: pointer; background: none; border: none; }
+
+ul, ol { list-style: none; }
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--text-dark);
+}
+h1 { font-size: var(--fs-2xl); font-weight: 700; }
+h2 { font-size: var(--fs-xl); font-weight: 700; }
+h3 { font-size: var(--fs-md); font-weight: 600; }
+h4 { font-size: var(--fs-base); font-weight: 600; }
+
+p { color: var(--text-body); }
+
+.text-muted { color: var(--text-body-muted); font-size: var(--fs-sm); }
+
+/* Visible keyboard focus everywhere — accessibility floor */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--highlight);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Scrollbar polish (progressive enhancement, harmless if unsupported) */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-color-strong); border-radius: var(--radius-pill); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent); }
+
+/* Utility classes reused across pages */
+.hidden { display: none !important; }
+[hidden] { display: none !important; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--sp-2);
+  padding: 11px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  transition: transform var(--dur-fast) var(--ease), box-shadow var(--dur-fast) var(--ease), background var(--dur-fast) var(--ease);
+  white-space: nowrap;
+}
+.btn:active { transform: translateY(1px) scale(0.98); }
+.btn-block { width: 100%; }
+.btn-lg { padding: 14px 26px; font-size: var(--fs-base); }
+.btn-sm { padding: 7px 14px; font-size: var(--fs-xs); }
+
+.btn-primary {
+  background: linear-gradient(90deg, var(--accent), var(--highlight));
+  color: #fff;
+  box-shadow: 0 6px 18px rgba(29, 94, 168, 0.35);
+}
+.btn-primary:hover { box-shadow: 0 8px 24px rgba(29, 94, 168, 0.5); transform: translateY(-1px); }
+
+.btn-outline {
+  background: transparent;
+  border: 1.5px solid var(--border-color-strong);
+  color: var(--secondary);
+}
+.btn-outline:hover { border-color: var(--accent); color: var(--accent); background: var(--info-bg); }
+
+.btn-ghost { background: transparent; color: var(--text-light); }
+.btn-ghost:hover { background: rgba(255, 255, 255, 0.1); }
+
+.btn-danger-outline {
+  background: transparent;
+  border: 1.5px solid rgba(231, 76, 60, 0.4);
+  color: var(--danger);
+}
+.btn-danger-outline:hover { background: var(--danger-bg); border-color: var(--danger); }
+
+.btn-chip {
+  background: var(--bg-card-alt);
+  border: 1px solid var(--border-color);
+  color: var(--secondary);
+  padding: 8px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--fs-xs);
+}
+.btn-chip:hover { background: var(--info-bg); border-color: var(--highlight); }
+
+.link-btn {
+  color: var(--accent);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+}
+.link-btn:hover { text-decoration: underline; }
+
+.icon-btn {
+  width: 40px; height: 40px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border-radius: var(--radius-md);
+  color: var(--secondary);
+  position: relative;
+}
+.icon-btn:hover { background: var(--bg-card-alt); }

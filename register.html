@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create an account — ProjectPulse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="auth-body">
+
+  <div class="auth-shell auth-shell-reverse">
+    <main class="auth-form-panel">
+      <div class="auth-form-wrap auth-form-wrap-lg">
+        <a href="index.html" class="brand brand-mobile-only">
+          <i class="fa-solid fa-diagram-project"></i><span>ProjectPulse</span>
+        </a>
+
+        <h1>Create your account</h1>
+        <p class="text-muted">Join your team as a Team Leader or Team Member.</p>
+
+        <form id="registerForm" class="app-form" novalidate>
+
+          <!-- Role selection -->
+          <fieldset class="role-select-group">
+            <legend>I am a...</legend>
+            <label class="role-select-card">
+              <input type="radio" name="role" value="leader" required />
+              <span class="role-select-inner">
+                <i class="fa-solid fa-user-tie"></i>
+                <strong>Team Leader</strong>
+                <small>Create &amp; manage the project</small>
+              </span>
+            </label>
+            <label class="role-select-card">
+              <input type="radio" name="role" value="member" />
+              <span class="role-select-inner">
+                <i class="fa-solid fa-user"></i>
+                <strong>Team Member</strong>
+                <small>Complete assigned tasks</small>
+              </span>
+            </label>
+          </fieldset>
+          <span class="field-error" id="roleError"></span>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="fullName">Full Name</label>
+              <input type="text" id="fullName" name="fullName" placeholder="Ayesha Rahman" required />
+              <span class="field-error" id="fullNameError"></span>
+            </div>
+            <div class="form-group">
+              <label for="studentId">Student ID</label>
+              <input type="text" id="studentId" name="studentId" placeholder="0112410544" required />
+              <span class="field-error" id="studentIdError"></span>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="regEmail">Email</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="email" id="regEmail" name="regEmail" placeholder="you@school.edu" required autocomplete="email" />
+            </div>
+            <span class="field-error" id="regEmailError"></span>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="department">Department</label>
+              <input type="text" id="department" name="department" placeholder="Computer Science" required />
+              <span class="field-error" id="departmentError"></span>
+            </div>
+            <div class="form-group">
+              <label for="semester">Semester</label>
+              <input type="text" id="semester" name="semester" placeholder="Summer 2026" required />
+              <span class="field-error" id="semesterError"></span>
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label for="regPassword">Password</label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="regPassword" name="regPassword" placeholder="••••••••" required autocomplete="new-password" />
+                <button type="button" class="toggle-password" id="toggleRegPassword" aria-label="Show password">
+                  <i class="fa-solid fa-eye"></i>
+                </button>
+              </div>
+              <div class="password-strength" id="passwordStrength">
+                <div class="strength-bar"><span></span><span></span><span></span><span></span></div>
+                <small class="strength-label">Password strength</small>
+              </div>
+              <span class="field-error" id="regPasswordError"></span>
+            </div>
+            <div class="form-group">
+              <label for="confirmPassword">Confirm Password</label>
+              <div class="input-with-icon">
+                <i class="fa-solid fa-lock"></i>
+                <input type="password" id="confirmPassword" name="confirmPassword" placeholder="••••••••" required autocomplete="new-password" />
+              </div>
+              <span class="field-error" id="confirmPasswordError"></span>
+            </div>
+          </div>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="agreeTerms" name="agreeTerms" required />
+            <span>I understand this is a course project and my data is stored only in this browser.</span>
+          </label>
+          <span class="field-error" id="agreeTermsError"></span>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg">
+            <i class="fa-solid fa-user-plus"></i> Create account
+          </button>
+        </form>
+
+        <p class="auth-switch">Already have an account? <a href="login.html">Log in</a></p>
+      </div>
+    </main>
+
+    <aside class="auth-visual" aria-hidden="true">
+      <a href="index.html" class="brand brand-light">
+        <i class="fa-solid fa-diagram-project"></i>
+        <span>ProjectPulse</span>
+      </a>
+      <div class="auth-visual-content">
+        <h2>Get your team organized in minutes.</h2>
+        <p>One account, one dashboard, every task and every piece of feedback in view.</p>
+        <ul class="visual-checklist">
+          <li><i class="fa-solid fa-circle-check"></i> No installs — runs in your browser</li>
+          <li><i class="fa-solid fa-circle-check"></i> Role-based dashboards</li>
+          <li><i class="fa-solid fa-circle-check"></i> Built-in teacher feedback loop</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <script src="js/data/storage.js"></script>
+  <script src="js/data/seed.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

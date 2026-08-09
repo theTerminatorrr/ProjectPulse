@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Log in — ProjectPulse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="auth-body">
+
+  <div class="auth-shell">
+    <!-- Left: brand / visual panel -->
+    <aside class="auth-visual" aria-hidden="true">
+      <a href="index.html" class="brand brand-light">
+        <i class="fa-solid fa-diagram-project"></i>
+        <span>ProjectPulse</span>
+      </a>
+      <div class="auth-visual-content">
+        <h2>Welcome back.</h2>
+        <p>Pick up right where your team left off — tasks, feedback, and deadlines are all waiting.</p>
+        <div class="glass-card auth-quote">
+          <i class="fa-solid fa-quote-left"></i>
+          <p>"The clearest project I've supervised all semester."</p>
+          <span class="text-muted">— a demo teacher, probably</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right: form -->
+    <main class="auth-form-panel">
+      <div class="auth-form-wrap">
+        <a href="index.html" class="brand brand-mobile-only">
+          <i class="fa-solid fa-diagram-project"></i><span>ProjectPulse</span>
+        </a>
+
+        <h1>Log in to your account</h1>
+        <p class="text-muted">Enter your credentials to access your dashboard.</p>
+
+        <!-- Demo login shortcuts -->
+        <div class="demo-login-row" aria-label="Quick demo logins">
+          <button type="button" class="btn btn-chip" data-demo-role="teacher"><i class="fa-solid fa-chalkboard-user"></i> Demo Teacher</button>
+          <button type="button" class="btn btn-chip" data-demo-role="leader"><i class="fa-solid fa-user-tie"></i> Demo Leader</button>
+          <button type="button" class="btn btn-chip" data-demo-role="member"><i class="fa-solid fa-user"></i> Demo Member</button>
+          <button type="button" class="btn btn-chip" data-demo-role="admin"><i class="fa-solid fa-user-shield"></i> Demo Admin</button>
+        </div>
+
+        <div class="divider"><span>or log in manually</span></div>
+
+        <form id="loginForm" class="app-form" novalidate>
+          <div class="form-group">
+            <label for="loginEmail">Email or Username</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-envelope"></i>
+              <input type="text" id="loginEmail" name="loginEmail" placeholder="you@school.edu" required autocomplete="username" />
+            </div>
+            <span class="field-error" id="loginEmailError"></span>
+          </div>
+
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <div class="input-with-icon">
+              <i class="fa-solid fa-lock"></i>
+              <input type="password" id="loginPassword" name="loginPassword" placeholder="••••••••" required autocomplete="current-password" />
+              <button type="button" class="toggle-password" id="toggleLoginPassword" aria-label="Show password">
+                <i class="fa-solid fa-eye"></i>
+              </button>
+            </div>
+            <span class="field-error" id="loginPasswordError"></span>
+          </div>
+
+          <div class="form-row-between">
+            <label class="checkbox-label">
+              <input type="checkbox" id="rememberMe" name="rememberMe" />
+              <span>Remember me</span>
+            </label>
+            <button type="button" class="link-btn" id="forgotPasswordBtn">Forgot password?</button>
+          </div>
+
+          <button type="submit" class="btn btn-primary btn-block btn-lg">
+            <i class="fa-solid fa-right-to-bracket"></i> Log in
+          </button>
+        </form>
+
+        <p class="auth-switch">Don't have an account? <a href="register.html">Create one</a></p>
+      </div>
+    </main>
+  </div>
+
+  <!-- Forgot password modal (UI simulation) -->
+  <div class="modal-overlay" id="forgotPasswordModal" hidden>
+    <div class="modal glass-card" role="dialog" aria-modal="true" aria-labelledby="forgotPasswordTitle">
+      <button class="modal-close" id="closeForgotModal" aria-label="Close">&times;</button>
+      <h3 id="forgotPasswordTitle"><i class="fa-solid fa-key"></i> Reset your password</h3>
+      <p class="text-muted">Enter your account email. We'll simulate sending a reset link (demo only — no email is actually sent).</p>
+      <form id="forgotPasswordForm" class="app-form">
+        <div class="form-group">
+          <label for="resetEmail">Email</label>
+          <input type="email" id="resetEmail" placeholder="you@school.edu" required />
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Send reset link</button>
+      </form>
+    </div>
+  </div>
+
+  <script src="js/data/storage.js"></script>
+  <script src="js/data/seed.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/validation.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Settings — ProjectPulse</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/pages.css" />
+
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+<body class="app-body" data-page="settings">
+
+  <aside class="sidebar" id="sidebar">
+    <a href="dashboard.html" class="brand"><i class="fa-solid fa-diagram-project"></i><span>ProjectPulse</span></a>
+    <nav class="sidebar-nav" aria-label="Main navigation">
+      <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
+      <a href="projects.html" class="nav-item"><i class="fa-solid fa-folder-open"></i><span>Projects</span></a>
+      <a href="tasks.html" class="nav-item"><i class="fa-solid fa-table-columns"></i><span>Tasks</span></a>
+      <a href="team.html" class="nav-item" data-role-visible="leader"><i class="fa-solid fa-people-group"></i><span>Team</span></a>
+      <a href="messages.html" class="nav-item"><i class="fa-solid fa-message"></i><span>Messages</span></a>
+      <a href="feedback.html" class="nav-item"><i class="fa-solid fa-comments"></i><span>Feedback</span></a>
+      <a href="calendar.html" class="nav-item"><i class="fa-solid fa-calendar-days"></i><span>Calendar</span></a>
+      <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
+      <a href="admin.html" class="nav-item" data-role-visible="admin"><i class="fa-solid fa-user-shield"></i><span>Admin</span></a>
+    </nav>
+    <div class="sidebar-footer">
+      <a href="settings.html" class="nav-item active"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
+      <button class="nav-item nav-item-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
+    </div>
+  </aside>
+
+  <div class="app-main">
+    <header class="topbar">
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+      <div class="topbar-search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+        <input type="search" id="globalSearch" placeholder="Search..." />
+      </div>
+      <div class="topbar-actions">
+        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot" id="notifCount">0</span></button>
+        <div class="notif-dropdown" id="notifDropdown" hidden>
+          <div class="notif-dropdown-header"><h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button></div>
+          <ul class="notif-list" id="notifList"></ul>
+        </div>
+        <div class="profile-menu">
+          <button class="profile-trigger" id="profileTrigger">
+            <img src="images/avatar-placeholder.png" alt="" class="avatar-sm" id="topbarAvatar" />
+            <span id="topbarUserName">Loading…</span>
+            <i class="fa-solid fa-chevron-down"></i>
+          </button>
+          <div class="profile-dropdown" id="profileDropdown" hidden>
+            <a href="profile.html"><i class="fa-solid fa-user"></i> Profile</a>
+            <a href="settings.html"><i class="fa-solid fa-gear"></i> Settings</a>
+            <button id="profileLogoutBtn"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main class="page-content">
+      <div class="page-header">
+        <div>
+          <h1>Settings</h1>
+          <p class="text-muted">Customize how ProjectPulse looks and notifies you.</p>
+        </div>
+      </div>
+
+      <div class="settings-list">
+        <section class="glass-card settings-section">
+          <h3><i class="fa-solid fa-palette"></i> Appearance</h3>
+          <div class="settings-row">
+            <div>
+              <strong>Theme</strong>
+              <p class="text-muted">Switch between light and dark mode.</p>
+            </div>
+            <label class="switch">
+              <input type="checkbox" id="darkModeToggle" />
+              <span class="switch-track"></span>
+            </label>
+          </div>
+          <div class="settings-row">
+            <div>
+              <strong>Language</strong>
+              <p class="text-muted">Interface language.</p>
+            </div>
+            <select id="languageSelect">
+              <option value="en">English</option>
+              <option value="bn">বাংলা</option>
+            </select>
+          </div>
+        </section>
+
+        <section class="glass-card settings-section">
+          <h3><i class="fa-solid fa-bell"></i> Notifications</h3>
+          <div class="settings-row">
+            <div><strong>Task assigned</strong><p class="text-muted">Notify me when I'm assigned a task.</p></div>
+            <label class="switch"><input type="checkbox" id="notifTaskAssigned" checked /><span class="switch-track"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><strong>Deadline approaching</strong><p class="text-muted">Remind me before a due date.</p></div>
+            <label class="switch"><input type="checkbox" id="notifDeadline" checked /><span class="switch-track"></span></label>
+          </div>
+          <div class="settings-row">
+            <div><strong>Teacher feedback</strong><p class="text-muted">Notify me on new feedback.</p></div>
+            <label class="switch"><input type="checkbox" id="notifFeedback" checked /><span class="switch-track"></span></label>
+          </div>
+        </section>
+
+        <section class="glass-card settings-section">
+          <h3><i class="fa-solid fa-database"></i> Data</h3>
+          <div class="settings-row">
+            <div><strong>Export all data</strong><p class="text-muted">Download your data as a JSON file.</p></div>
+            <button class="btn btn-outline btn-sm" id="settingsExportBtn"><i class="fa-solid fa-file-export"></i> Export</button>
+          </div>
+          <div class="settings-row">
+            <div><strong>Import data</strong><p class="text-muted">Merge in a previously exported JSON file — your existing data is kept; matching records are updated and new ones are added. Useful for bringing a teammate's account into your browser, since accounts don't sync automatically (see Settings help).</p></div>
+            <label class="btn btn-outline btn-sm" for="settingsImportInput"><i class="fa-solid fa-file-import"></i> Import</label>
+            <input type="file" id="settingsImportInput" accept="application/json" hidden />
+          </div>
+          <div class="settings-row">
+            <div><strong>Reset demo data</strong><p class="text-muted">Clear everything and reseed sample data.</p></div>
+            <button class="btn btn-danger-outline btn-sm" id="resetDataBtn"><i class="fa-solid fa-trash"></i> Reset</button>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <script src="js/data/storage.js"></script>
+  <script src="js/data/seed.js"></script>
+  <script src="js/utils.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/notifications.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

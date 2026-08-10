@@ -9,7 +9,8 @@ html { scroll-behavior: smooth; }
 /* Safety net: nothing on any page should ever be able to force horizontal
    scroll — if it does, this hides the overflow instead of revealing a gap
    of raw background color at the edge of the screen on mobile. */
-html, body { overflow-x: hidden; max-width: 100%; }
+html { overflow-x: hidden; }
+body { max-width: 100%; }
 
 body {
   font-family: var(--font-main);

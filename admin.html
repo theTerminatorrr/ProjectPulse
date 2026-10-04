@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Admin Panel — ProjectPulse</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <link rel="stylesheet" href="css/variables.css" />
@@ -17,6 +19,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body class="app-body" data-page="admin">
 
   <aside class="sidebar" id="sidebar">
@@ -29,25 +32,31 @@
       <a href="feedback.html" class="nav-item"><i class="fa-solid fa-comments"></i><span>Feedback</span></a>
       <a href="calendar.html" class="nav-item"><i class="fa-solid fa-calendar-days"></i><span>Calendar</span></a>
       <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
-      <a href="admin.html" class="nav-item active" data-role-visible="admin"><i class="fa-solid fa-user-shield"></i><span>Admin</span></a>
+      <a href="admin.html" class="nav-item active" data-role-visible="admin"><i
+          class="fa-solid fa-user-shield"></i><span>Admin</span></a>
     </nav>
     <div class="sidebar-footer">
       <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-      <button class="nav-item nav-item-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
+      <button class="nav-item nav-item-btn" id="logoutBtn"><i
+          class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
     </div>
   </aside>
 
   <div class="app-main">
     <header class="topbar">
-      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i
+          class="fa-solid fa-bars"></i></button>
       <div class="topbar-search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="search" id="globalSearch" placeholder="Search..." />
       </div>
       <div class="topbar-actions">
-        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot" id="notifCount">0</span></button>
+        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span
+            class="badge-dot" id="notifCount">0</span></button>
         <div class="notif-dropdown" id="notifDropdown" hidden>
-          <div class="notif-dropdown-header"><h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button></div>
+          <div class="notif-dropdown-header">
+            <h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button>
+          </div>
           <ul class="notif-list" id="notifList"></ul>
         </div>
         <div class="profile-menu">
@@ -71,14 +80,23 @@
           <h1>Admin Panel</h1>
           <p class="text-muted">Platform-wide user and project management.</p>
         </div>
-        <button class="btn btn-primary" id="openGlobalAnnouncementBtn"><i class="fa-solid fa-bullhorn"></i> Global Announcement</button>
+        <button class="btn btn-primary" id="openGlobalAnnouncementBtn"><i class="fa-solid fa-bullhorn"></i> Global
+          Announcement</button>
       </div>
 
       <div class="stat-grid">
-        <div class="stat-card glass-card"><i class="fa-solid fa-users"></i><div><strong id="statTotalUsers">0</strong><span>Total Users</span></div></div>
-        <div class="stat-card glass-card"><i class="fa-solid fa-folder-open"></i><div><strong id="statTotalProjectsAdmin">0</strong><span>Total Projects</span></div></div>
-        <div class="stat-card glass-card"><i class="fa-solid fa-list-check"></i><div><strong id="statTotalTasksAdmin">0</strong><span>Total Tasks</span></div></div>
-        <div class="stat-card glass-card"><i class="fa-solid fa-chart-simple"></i><div><strong id="statCompletionRate">0%</strong><span>Platform Completion Rate</span></div></div>
+        <div class="stat-card glass-card"><i class="fa-solid fa-users"></i>
+          <div><strong id="statTotalUsers">0</strong><span>Total Users</span></div>
+        </div>
+        <div class="stat-card glass-card"><i class="fa-solid fa-folder-open"></i>
+          <div><strong id="statTotalProjectsAdmin">0</strong><span>Total Projects</span></div>
+        </div>
+        <div class="stat-card glass-card"><i class="fa-solid fa-list-check"></i>
+          <div><strong id="statTotalTasksAdmin">0</strong><span>Total Tasks</span></div>
+        </div>
+        <div class="stat-card glass-card"><i class="fa-solid fa-chart-simple"></i>
+          <div><strong id="statCompletionRate">0%</strong><span>Platform Completion Rate</span></div>
+        </div>
       </div>
 
       <div class="tabs" role="tablist">
@@ -105,7 +123,15 @@
         </div>
         <div class="glass-card">
           <table class="data-table" id="adminUsersTable">
-            <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Status</th><th></th></tr></thead>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Status</th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody></tbody>
           </table>
         </div>
@@ -114,7 +140,16 @@
       <section class="tab-panel" id="tab-admin-projects" hidden>
         <div class="glass-card">
           <table class="data-table" id="adminProjectsTable">
-            <thead><tr><th>Project</th><th>Leader</th><th>Status</th><th>Deadline</th><th>Members</th><th></th></tr></thead>
+            <thead>
+              <tr>
+                <th>Project</th>
+                <th>Leader</th>
+                <th>Status</th>
+                <th>Deadline</th>
+                <th>Members</th>
+                <th></th>
+              </tr>
+            </thead>
             <tbody></tbody>
           </table>
         </div>
@@ -146,43 +181,43 @@
   </div>
 
   <script>
-document.addEventListener('DOMContentLoaded', function () {
-  setTimeout(function () {
-    var btn = Array.from(document.querySelectorAll('button'))
-      .find(function (b) { return /global announcement/i.test(b.textContent); });
-    if (!btn) return console.warn('Global Announcement button not found');
-    btn.type = 'button';
-    btn.addEventListener('click', async function () {
-      var r = await Swal.fire({
-        title: 'Global Announcement',
-        html:
-          '<input id="ga-title" class="swal2-input" placeholder="Title">' +
-          '<textarea id="ga-msg" class="swal2-textarea" placeholder="Message"></textarea>',
-        showCancelButton: true,
-        confirmButtonText: 'Publish',
-        preConfirm: function () {
-          var t = document.getElementById('ga-title').value.trim();
-          var m = document.getElementById('ga-msg').value.trim();
-          if (!t || !m) { Swal.showValidationMessage('Title and message are required'); return false; }
-          return { title: t, message: m };
-        }
-      });
-      if (!r.isConfirmed) return;
-      var user = Session.getUser ? Session.getUser() : null;
-      Storage.save('announcements', {
-        id: 'a_' + Date.now(),
-        authorId: user ? user.id : 'admin',
-        title: r.value.title,
-        message: r.value.message,
-        type: 'general',
-        projectId: null,
-        createdAt: new Date().toISOString()
-      });
-      Swal.fire('Published', 'Visible to all users.', 'success');
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(function () {
+        var btn = Array.from(document.querySelectorAll('button'))
+          .find(function (b) { return /global announcement/i.test(b.textContent); });
+        if (!btn) return console.warn('Global Announcement button not found');
+        btn.type = 'button';
+        btn.addEventListener('click', async function () {
+          var r = await Swal.fire({
+            title: 'Global Announcement',
+            html:
+              '<input id="ga-title" class="swal2-input" placeholder="Title">' +
+              '<textarea id="ga-msg" class="swal2-textarea" placeholder="Message"></textarea>',
+            showCancelButton: true,
+            confirmButtonText: 'Publish',
+            preConfirm: function () {
+              var t = document.getElementById('ga-title').value.trim();
+              var m = document.getElementById('ga-msg').value.trim();
+              if (!t || !m) { Swal.showValidationMessage('Title and message are required'); return false; }
+              return { title: t, message: m };
+            }
+          });
+          if (!r.isConfirmed) return;
+          var user = Session.getUser ? Session.getUser() : null;
+          Storage.save('announcements', {
+            id: 'a_' + Date.now(),
+            authorId: user ? user.id : 'admin',
+            title: r.value.title,
+            message: r.value.message,
+            type: 'general',
+            projectId: null,
+            createdAt: new Date().toISOString()
+          });
+          Swal.fire('Published', 'Visible to all users.', 'success');
+        });
+      }, 50);
     });
-  }, 50);
-});
-</script>
+  </script>
 
   <script src="js/data/storage.js"></script>
   <script src="js/data/seed.js"></script>
@@ -195,4 +230,5 @@ document.addEventListener('DOMContentLoaded', function () {
   <script src="js/admin.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>

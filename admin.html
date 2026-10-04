@@ -145,6 +145,45 @@
     </div>
   </div>
 
+  <script>
+document.addEventListener('DOMContentLoaded', function () {
+  setTimeout(function () {
+    var btn = Array.from(document.querySelectorAll('button'))
+      .find(function (b) { return /global announcement/i.test(b.textContent); });
+    if (!btn) return console.warn('Global Announcement button not found');
+    btn.type = 'button';
+    btn.addEventListener('click', async function () {
+      var r = await Swal.fire({
+        title: 'Global Announcement',
+        html:
+          '<input id="ga-title" class="swal2-input" placeholder="Title">' +
+          '<textarea id="ga-msg" class="swal2-textarea" placeholder="Message"></textarea>',
+        showCancelButton: true,
+        confirmButtonText: 'Publish',
+        preConfirm: function () {
+          var t = document.getElementById('ga-title').value.trim();
+          var m = document.getElementById('ga-msg').value.trim();
+          if (!t || !m) { Swal.showValidationMessage('Title and message are required'); return false; }
+          return { title: t, message: m };
+        }
+      });
+      if (!r.isConfirmed) return;
+      var user = Session.getUser ? Session.getUser() : null;
+      Storage.save('announcements', {
+        id: 'a_' + Date.now(),
+        authorId: user ? user.id : 'admin',
+        title: r.value.title,
+        message: r.value.message,
+        type: 'general',
+        projectId: null,
+        createdAt: new Date().toISOString()
+      });
+      Swal.fire('Published', 'Visible to all users.', 'success');
+    });
+  }, 50);
+});
+</script>
+
   <script src="js/data/storage.js"></script>
   <script src="js/data/seed.js"></script>
   <script src="js/utils.js"></script>

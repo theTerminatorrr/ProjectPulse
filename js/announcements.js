@@ -1,8 +1,3 @@
-/* ==========================================================================
-   ProjectPulse — announcements.js
-   Teacher/project announcements (meetings, deadlines, presentations, exams)
-   surfaced as a dashboard widget with unread-style highlighting.
-   ========================================================================== */
 
 const Announcements = {
   TYPE_ICONS: {

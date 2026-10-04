@@ -199,7 +199,10 @@ function initTasksPage() {
   document.addEventListener('click', (e) => {
     const editBtn = e.target.closest('[data-edit-task]');
     if (editBtn) { e.stopPropagation(); openTaskModal(Tasks.byId(editBtn.getAttribute('data-edit-task'))); return; }
-    const card = e.target.closest('[data-task-id]');
+    // FIX: ignore clicks inside the detail panel itself (the overlay also carries
+    // data-task-id, which used to make the X button reopen the panel immediately).
+    if (e.target.closest('#taskDetailOverlay')) return;
+    const card = e.target.closest('.task-card[data-task-id], tr[data-task-id]');
     if (card && !e.target.closest('.modal')) openTaskDetail(card.getAttribute('data-task-id'));
   });
 
@@ -341,7 +344,7 @@ function renderAttachments(task) {
 function renderComments(task) {
   const list = document.getElementById('taskCommentsList');
   list.innerHTML = (task.comments || []).map((c) => `
-    <li><strong>${Storage.getById('users', c.userId)?.fullName || 'Someone'}</strong>${Utils.escapeHtml(c.text)}<div class="notif-time">${Utils.formatDateTime(c.date)}</div></li>
+    <li><strong>${Utils.escapeHtml(Storage.getById('users', c.userId)?.fullName || 'Someone')}</strong> ${Utils.escapeHtml(c.text)}<div class="notif-time">${Utils.formatDateTime(c.date)}</div></li>
   `).join('') || `<li class="text-muted">No comments yet.</li>`;
 }
 

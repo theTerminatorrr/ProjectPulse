@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Messages — ProjectPulse</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <link rel="stylesheet" href="css/variables.css" />
@@ -17,6 +19,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body class="app-body" data-page="messages">
 
   <aside class="sidebar" id="sidebar">
@@ -25,30 +28,37 @@
       <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
       <a href="projects.html" class="nav-item"><i class="fa-solid fa-folder-open"></i><span>Projects</span></a>
       <a href="tasks.html" class="nav-item"><i class="fa-solid fa-table-columns"></i><span>Tasks</span></a>
-      <a href="team.html" class="nav-item" data-role-visible="leader"><i class="fa-solid fa-people-group"></i><span>Team</span></a>
+      <a href="team.html" class="nav-item" data-role-visible="leader"><i
+          class="fa-solid fa-people-group"></i><span>Team</span></a>
       <a href="messages.html" class="nav-item active"><i class="fa-solid fa-message"></i><span>Messages</span></a>
       <a href="feedback.html" class="nav-item"><i class="fa-solid fa-comments"></i><span>Feedback</span></a>
       <a href="calendar.html" class="nav-item"><i class="fa-solid fa-calendar-days"></i><span>Calendar</span></a>
       <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
-      <a href="admin.html" class="nav-item" data-role-visible="admin"><i class="fa-solid fa-user-shield"></i><span>Admin</span></a>
+      <a href="admin.html" class="nav-item" data-role-visible="admin"><i
+          class="fa-solid fa-user-shield"></i><span>Admin</span></a>
     </nav>
     <div class="sidebar-footer">
       <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-      <button class="nav-item nav-item-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
+      <button class="nav-item nav-item-btn" id="logoutBtn"><i
+          class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
     </div>
   </aside>
 
   <div class="app-main">
     <header class="topbar">
-      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i
+          class="fa-solid fa-bars"></i></button>
       <div class="topbar-search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="search" id="globalSearch" placeholder="Search..." />
       </div>
       <div class="topbar-actions">
-        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot" id="notifCount">0</span></button>
+        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span
+            class="badge-dot" id="notifCount">0</span></button>
         <div class="notif-dropdown" id="notifDropdown" hidden>
-          <div class="notif-dropdown-header"><h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button></div>
+          <div class="notif-dropdown-header">
+            <h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button>
+          </div>
           <ul class="notif-list" id="notifList"></ul>
         </div>
         <div class="profile-menu">
@@ -72,7 +82,8 @@
           <h1>Messages</h1>
           <p class="text-muted">Direct messages with people you share a project with.</p>
         </div>
-        <button class="btn btn-primary" id="newMessageBtn"><i class="fa-solid fa-pen-to-square"></i> New Message</button>
+        <button class="btn btn-primary" id="newMessageBtn"><i class="fa-solid fa-pen-to-square"></i> New
+          Message</button>
       </div>
 
       <div class="chat-shell glass-card">
@@ -127,6 +138,205 @@
     </div>
   </div>
 
+  <script>
+    (function () {
+      var KEY_USERS = 'pt_users', KEY_PROJECTS = 'pt_projects', KEY_MSGS = 'pt_messages';
+      var activeId = null, pending = {};
+
+      // Keep app.js happy if it looks for a page-init function
+      window.initMessagesPage = window.initMessagesPage || function () { };
+
+      var st = document.createElement('style');
+      st.textContent =
+        '[hidden]{display:none !important;}' +
+        '.conv-item{list-style:none;display:flex;gap:.75rem;align-items:center;padding:.75rem 1rem;cursor:pointer;border-radius:12px;}' +
+        '.conv-item:hover,.conv-item.active{background:rgba(30,90,170,.10);}' +
+        '.conv-avatar{width:38px;height:38px;border-radius:50%;background:#1e5aaa;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:600;flex-shrink:0;}' +
+        '.conv-meta{min-width:0;flex:1;}' +
+        '.conv-meta strong{display:block;}' +
+        '.conv-meta small{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;opacity:.65;}' +
+        '.conv-unread{background:#e03e3e;color:#fff;border-radius:999px;font-size:.7rem;padding:.1rem .5rem;}' +
+        '.chat-messages{display:flex;flex-direction:column;gap:.5rem;overflow-y:auto;}' +
+        '.msg-bubble{max-width:70%;padding:.6rem .9rem;border-radius:14px;word-wrap:break-word;}' +
+        '.msg-bubble.mine{align-self:flex-end;background:#1e5aaa;color:#fff;border-bottom-right-radius:4px;}' +
+        '.msg-bubble.theirs{align-self:flex-start;background:rgba(0,0,0,.07);border-bottom-left-radius:4px;}' +
+        '.msg-bubble small{display:block;font-size:.65rem;opacity:.7;margin-top:.2rem;}';
+      document.head.appendChild(st);
+
+      function $(id) { return document.getElementById(id); }
+      function read(k) { try { return JSON.parse(localStorage.getItem(k) || '[]') || []; } catch (e) { return []; } }
+      function write(k, v) { localStorage.setItem(k, JSON.stringify(v)); }
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function timeStr(iso) {
+        try { return new Date(iso).toLocaleString([], { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' }); }
+        catch (e) { return ''; }
+      }
+
+      function me() {
+        var s = null;
+        try { s = JSON.parse(sessionStorage.getItem('pt_session') || localStorage.getItem('pt_session') || 'null'); } catch (e) { }
+        if (!s) return null;
+        var users = read(KEY_USERS);
+        var id = s.userId || s.id || (s.user && s.user.id);
+        var email = s.email || (s.user && s.user.email);
+        return users.find(function (u) { return u.id === id; }) ||
+          users.find(function (u) { return email && u.email === email; }) || null;
+      }
+      function userById(id) { return read(KEY_USERS).find(function (u) { return u.id === id; }); }
+      function nameOf(u) {
+        if (!u) return 'Unknown';
+        return u.name || u.fullName || ((u.firstName || '') + ' ' + (u.lastName || '')).trim() || u.email || 'User';
+      }
+      function roleOf(u) {
+        var m = { teacher: 'Teacher', leader: 'Team Leader', member: 'Team Member', admin: 'Administrator' };
+        return u && m[u.role] ? m[u.role] : (u && u.role) || '';
+      }
+
+      // People the current user shares a project with (falls back to everyone else)
+      function people() {
+        var m = me(); if (!m) return [];
+        var others = read(KEY_USERS).filter(function (u) { return u.id !== m.id; });
+        if (m.role === 'admin') return others;
+        var ids = {};
+        read(KEY_PROJECTS).forEach(function (p) {
+          var set = [];
+          Object.keys(p).forEach(function (k) {
+            var v = p[k];
+            if (/(leader|teacher|owner|created)/i.test(k) && typeof v === 'string') set.push(v);
+            if (/(member|team)/i.test(k) && Array.isArray(v)) {
+              v.forEach(function (x) { set.push(x && typeof x === 'object' ? (x.id || x.userId) : x); });
+            }
+          });
+          if (set.indexOf(m.id) > -1) set.forEach(function (i) { if (i && i !== m.id) ids[i] = true; });
+        });
+        var list = others.filter(function (u) { return ids[u.id]; });
+        return list.length ? list : others;
+      }
+
+      function myMessages() {
+        var m = me(); if (!m) return [];
+        return read(KEY_MSGS).filter(function (x) { return x.fromId === m.id || x.toId === m.id; });
+      }
+      function thread(uid) {
+        var m = me();
+        return myMessages().filter(function (x) {
+          return (x.fromId === m.id && x.toId === uid) || (x.fromId === uid && x.toId === m.id);
+        }).sort(function (a, b) { return new Date(a.createdAt) - new Date(b.createdAt); });
+      }
+
+      function renderList() {
+        var m = me(), ul = $('conversationList'); if (!m || !ul) return;
+        var q = ($('conversationSearch').value || '').toLowerCase();
+        var partners = {};
+        myMessages().forEach(function (x) { partners[x.fromId === m.id ? x.toId : x.fromId] = true; });
+        Object.keys(pending).forEach(function (id) { partners[id] = true; });
+
+        var rows = Object.keys(partners).map(function (id) {
+          var t = thread(id), last = t[t.length - 1];
+          var unread = t.filter(function (x) { return x.toId === m.id && !x.read; }).length;
+          return { id: id, user: userById(id), last: last, unread: unread };
+        }).filter(function (r) { return r.user && nameOf(r.user).toLowerCase().indexOf(q) > -1; })
+          .sort(function (a, b) {
+            return new Date(b.last ? b.last.createdAt : 0) - new Date(a.last ? a.last.createdAt : 0);
+          });
+
+        ul.innerHTML = rows.map(function (r) {
+          var n = nameOf(r.user);
+          return '<li class="conv-item' + (r.id === activeId ? ' active' : '') + '" data-uid="' + esc(r.id) + '">' +
+            '<div class="conv-avatar">' + esc(n.charAt(0).toUpperCase()) + '</div>' +
+            '<div class="conv-meta"><strong>' + esc(n) + '</strong><small>' +
+            esc(r.last ? r.last.text : 'No messages yet') + '</small></div>' +
+            (r.unread ? '<span class="conv-unread">' + r.unread + '</span>' : '') + '</li>';
+        }).join('');
+        $('conversationsEmptyState').hidden = rows.length > 0;
+      }
+
+      function renderMessages() {
+        var m = me(), box = $('chatMessages'); if (!m || !box || !activeId) return;
+        box.innerHTML = thread(activeId).map(function (x) {
+          return '<div class="msg-bubble ' + (x.fromId === m.id ? 'mine' : 'theirs') + '">' +
+            esc(x.text) + '<small>' + esc(timeStr(x.createdAt)) + '</small></div>';
+        }).join('');
+        box.scrollTop = box.scrollHeight;
+      }
+
+      function openThread(uid) {
+        var m = me(), u = userById(uid); if (!m || !u) return;
+        activeId = uid;
+        // mark incoming as read
+        var all = read(KEY_MSGS), changed = false;
+        all.forEach(function (x) { if (x.fromId === uid && x.toId === m.id && !x.read) { x.read = true; changed = true; } });
+        if (changed) write(KEY_MSGS, all);
+
+        $('chatThreadEmpty').hidden = true;
+        $('chatThreadActive').hidden = false;
+        $('chatThreadName').textContent = nameOf(u);
+        $('chatThreadRole').textContent = roleOf(u) ? ' · ' + roleOf(u) : '';
+        if (u.avatar) $('chatThreadAvatar').src = u.avatar;
+        renderMessages(); renderList();
+        var inp = $('chatComposeInput'); if (inp) inp.focus();
+      }
+
+      function openModal() {
+        var sel = $('newMessageRecipient'), list = people();
+        sel.innerHTML = list.length
+          ? list.map(function (u) {
+            return '<option value="' + esc(u.id) + '">' + esc(nameOf(u)) + (roleOf(u) ? ' (' + esc(roleOf(u)) + ')' : '') + '</option>';
+          }).join('')
+          : '<option value="">No people available</option>';
+        $('newMessageModal').hidden = false;
+      }
+      function closeModal() { var m = $('newMessageModal'); if (m) m.hidden = true; }
+
+      document.addEventListener('click', function (e) {
+        var t = e.target;
+        if (t.closest('#newMessageBtn')) { e.preventDefault(); e.stopImmediatePropagation(); openModal(); return; }
+        if (t.closest('[data-close-modal="newMessageModal"]')) { e.preventDefault(); e.stopImmediatePropagation(); closeModal(); return; }
+        if (t === $('newMessageModal')) { closeModal(); return; }
+        if (t.closest('#startConversationBtn')) {
+          e.preventDefault(); e.stopImmediatePropagation();
+          var id = $('newMessageRecipient').value;
+          if (!id) { if (window.Swal) Swal.fire('Pick someone', 'Choose a recipient first.', 'info'); return; }
+          pending[id] = true; closeModal(); renderList(); openThread(id); return;
+        }
+        var item = t.closest('.conv-item');
+        if (item) openThread(item.getAttribute('data-uid'));
+      }, true);
+
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape') closeModal(); });
+
+      document.addEventListener('submit', function (e) {
+        if (e.target.id !== 'chatComposeForm') return;
+        e.preventDefault(); e.stopImmediatePropagation();
+        var m = me(), inp = $('chatComposeInput'), text = inp.value.trim();
+        if (!m || !activeId || !text) return;
+        var all = read(KEY_MSGS);
+        all.push({
+          id: 'm_' + Date.now() + '_' + Math.floor(Math.random() * 1000),
+          fromId: m.id, toId: activeId, text: text,
+          createdAt: new Date().toISOString(), read: false
+        });
+        write(KEY_MSGS, all);
+        inp.value = '';
+        delete pending[activeId];
+        renderMessages(); renderList();
+      }, true);
+
+      document.addEventListener('input', function (e) { if (e.target.id === 'conversationSearch') renderList(); });
+
+      // Updates from another browser tab
+      window.addEventListener('storage', function (e) {
+        if (e.key === KEY_MSGS) { renderList(); renderMessages(); }
+      });
+
+      document.addEventListener('DOMContentLoaded', function () { setTimeout(renderList, 100); });
+    })();
+  </script>
+
   <script src="js/data/storage.js"></script>
   <script src="js/data/seed.js"></script>
   <script src="js/utils.js"></script>
@@ -136,4 +346,5 @@
   <script src="js/messages.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>

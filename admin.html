@@ -181,42 +181,102 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', function () {
-      setTimeout(function () {
-        var btn = Array.from(document.querySelectorAll('button'))
-          .find(function (b) { return /global announcement/i.test(b.textContent); });
-        if (!btn) return console.warn('Global Announcement button not found');
-        btn.type = 'button';
-        btn.addEventListener('click', async function () {
-          var r = await Swal.fire({
-            title: 'Global Announcement',
-            html:
-              '<input id="ga-title" class="swal2-input" placeholder="Title">' +
-              '<textarea id="ga-msg" class="swal2-textarea" placeholder="Message"></textarea>',
-            showCancelButton: true,
-            confirmButtonText: 'Publish',
-            preConfirm: function () {
-              var t = document.getElementById('ga-title').value.trim();
-              var m = document.getElementById('ga-msg').value.trim();
-              if (!t || !m) { Swal.showValidationMessage('Title and message are required'); return false; }
-              return { title: t, message: m };
-            }
-          });
-          if (!r.isConfirmed) return;
-          var user = Session.getUser ? Session.getUser() : null;
-          Storage.save('announcements', {
-            id: 'a_' + Date.now(),
-            authorId: user ? user.id : 'admin',
-            title: r.value.title,
-            message: r.value.message,
-            type: 'general',
-            projectId: null,
-            createdAt: new Date().toISOString()
-          });
-          Swal.fire('Published', 'Visible to all users.', 'success');
+    (function () {
+      var MODAL_ID = 'globalAnnouncementModal';
+
+      // Make sure the [hidden] attribute always wins over CSS display rules
+      var st = document.createElement('style');
+      st.textContent = '[hidden]{display:none !important;}';
+      document.head.appendChild(st);
+
+      function modal() { return document.getElementById(MODAL_ID); }
+
+      function openModal() {
+        var m = modal();
+        if (!m) return;
+        m.hidden = false;
+        var t = document.getElementById('gaTitle');
+        if (t) setTimeout(function () { t.focus(); }, 0);
+      }
+
+      function closeModal() {
+        var m = modal();
+        if (m) m.hidden = true;
+      }
+
+      function currentUserId() {
+        try {
+          var raw = sessionStorage.getItem('pt_session') || localStorage.getItem('pt_session');
+          var s = raw ? JSON.parse(raw) : null;
+          return (s && (s.userId || s.id)) || 'admin';
+        } catch (e) { return 'admin'; }
+      }
+
+      function saveAnnouncement(a) {
+        // Preferred: the project's own storage layer
+        try {
+          if (window.Storage && typeof Storage.save === 'function') {
+            Storage.save('announcements', a);
+            var chk = JSON.parse(localStorage.getItem('pt_announcements') || '[]');
+            if (chk.some(function (x) { return x.id === a.id; })) return;
+          }
+        } catch (e) { console.warn('Storage.save failed, using fallback', e); }
+        // Fallback: write the documented pt_announcements array directly
+        var list = [];
+        try { list = JSON.parse(localStorage.getItem('pt_announcements') || '[]'); } catch (e) { }
+        list.push(a);
+        localStorage.setItem('pt_announcements', JSON.stringify(list));
+      }
+
+      function notify(title, text, icon) {
+        if (window.Swal) Swal.fire(title, text, icon);
+        else alert(title + ' - ' + text);
+      }
+
+      // Capture phase: runs before any other handler, so nothing can double-toggle the modal
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('#openGlobalAnnouncementBtn')) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          openModal();
+          return;
+        }
+        if (e.target.closest('[data-close-modal="' + MODAL_ID + '"]')) {
+          e.preventDefault();
+          e.stopImmediatePropagation();
+          closeModal();
+          return;
+        }
+        if (e.target === modal()) { // click on the dark backdrop
+          closeModal();
+        }
+      }, true);
+
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape') closeModal();
+      });
+
+      document.addEventListener('submit', function (e) {
+        if (e.target.id !== 'globalAnnouncementForm') return;
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        var title = document.getElementById('gaTitle').value.trim();
+        var message = document.getElementById('gaMessage').value.trim();
+        if (!title || !message) return;
+        saveAnnouncement({
+          id: 'a_' + Date.now(),
+          authorId: currentUserId(),
+          title: title,
+          message: message,
+          type: 'general',
+          projectId: null,
+          createdAt: new Date().toISOString()
         });
-      }, 50);
-    });
+        e.target.reset();
+        closeModal();
+        notify('Posted', 'Your announcement is now visible to everyone.', 'success');
+      }, true);
+    })();
   </script>
 
   <script src="js/data/storage.js"></script>

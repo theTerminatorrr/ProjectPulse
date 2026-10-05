@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Tasks — ProjectPulse</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
   <link rel="stylesheet" href="css/variables.css" />
@@ -17,6 +19,7 @@
 
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
+
 <body class="app-body" data-page="tasks">
 
   <aside class="sidebar" id="sidebar">
@@ -25,30 +28,37 @@
       <a href="dashboard.html" class="nav-item"><i class="fa-solid fa-gauge-high"></i><span>Dashboard</span></a>
       <a href="projects.html" class="nav-item"><i class="fa-solid fa-folder-open"></i><span>Projects</span></a>
       <a href="tasks.html" class="nav-item active"><i class="fa-solid fa-table-columns"></i><span>Tasks</span></a>
-      <a href="team.html" class="nav-item" data-role-visible="leader"><i class="fa-solid fa-people-group"></i><span>Team</span></a>
+      <a href="team.html" class="nav-item" data-role-visible="leader"><i
+          class="fa-solid fa-people-group"></i><span>Team</span></a>
       <a href="messages.html" class="nav-item"><i class="fa-solid fa-message"></i><span>Messages</span></a>
       <a href="feedback.html" class="nav-item"><i class="fa-solid fa-comments"></i><span>Feedback</span></a>
       <a href="calendar.html" class="nav-item"><i class="fa-solid fa-calendar-days"></i><span>Calendar</span></a>
       <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-line"></i><span>Reports</span></a>
-      <a href="admin.html" class="nav-item" data-role-visible="admin"><i class="fa-solid fa-user-shield"></i><span>Admin</span></a>
+      <a href="admin.html" class="nav-item" data-role-visible="admin"><i
+          class="fa-solid fa-user-shield"></i><span>Admin</span></a>
     </nav>
     <div class="sidebar-footer">
       <a href="settings.html" class="nav-item"><i class="fa-solid fa-gear"></i><span>Settings</span></a>
-      <button class="nav-item nav-item-btn" id="logoutBtn"><i class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
+      <button class="nav-item nav-item-btn" id="logoutBtn"><i
+          class="fa-solid fa-right-from-bracket"></i><span>Logout</span></button>
     </div>
   </aside>
 
   <div class="app-main">
     <header class="topbar">
-      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i class="fa-solid fa-bars"></i></button>
+      <button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu"><i
+          class="fa-solid fa-bars"></i></button>
       <div class="topbar-search">
         <i class="fa-solid fa-magnifying-glass"></i>
         <input type="search" id="globalSearch" placeholder="Search projects, tasks, members..." />
       </div>
       <div class="topbar-actions">
-        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span class="badge-dot" id="notifCount">0</span></button>
+        <button class="icon-btn" id="notifBell" aria-label="Notifications"><i class="fa-solid fa-bell"></i><span
+            class="badge-dot" id="notifCount">0</span></button>
         <div class="notif-dropdown" id="notifDropdown" hidden>
-          <div class="notif-dropdown-header"><h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button></div>
+          <div class="notif-dropdown-header">
+            <h4>Notifications</h4><button class="link-btn" id="clearAllNotifs">Clear all</button>
+          </div>
           <ul class="notif-list" id="notifList"></ul>
         </div>
         <div class="profile-menu">
@@ -73,7 +83,8 @@
           <p class="text-muted">Drag cards between columns or use the table view below.</p>
         </div>
         <div class="page-header-actions">
-          <button class="btn btn-primary" id="openCreateTaskBtn" data-role-visible="leader"><i class="fa-solid fa-plus"></i> New Task</button>
+          <button class="btn btn-primary" id="openCreateTaskBtn" data-role-visible="leader"><i
+              class="fa-solid fa-plus"></i> New Task</button>
         </div>
       </div>
 
@@ -84,17 +95,22 @@
           <input type="search" id="taskSearchInput" placeholder="Search tasks..." />
         </div>
         <div class="toolbar-filters">
-          <select id="projectFilter" aria-label="Filter by project"><option value="">All projects</option></select>
+          <select id="projectFilter" aria-label="Filter by project">
+            <option value="">All projects</option>
+          </select>
           <select id="priorityFilter" aria-label="Filter by priority">
             <option value="">All priorities</option>
             <option value="low">Low</option>
             <option value="medium">Medium</option>
             <option value="high">High</option>
           </select>
-          <select id="assigneeFilter" aria-label="Filter by assignee"><option value="">All members</option></select>
+          <select id="assigneeFilter" aria-label="Filter by assignee">
+            <option value="">All members</option>
+          </select>
         </div>
         <div class="view-toggle">
-          <button class="view-toggle-btn active" id="viewKanbanBtn"><i class="fa-solid fa-table-columns"></i> Board</button>
+          <button class="view-toggle-btn active" id="viewKanbanBtn"><i class="fa-solid fa-table-columns"></i>
+            Board</button>
           <button class="view-toggle-btn" id="viewTableBtn"><i class="fa-solid fa-table-list"></i> Table</button>
         </div>
       </div>
@@ -106,7 +122,8 @@
           <div class="kanban-column-body" id="col-todo"></div>
         </div>
         <div class="kanban-column" data-status="in_progress">
-          <div class="kanban-column-header"><span>In Progress</span><span class="col-count" id="countInProgress">0</span></div>
+          <div class="kanban-column-header"><span>In Progress</span><span class="col-count"
+              id="countInProgress">0</span></div>
           <div class="kanban-column-body" id="col-in_progress"></div>
         </div>
         <div class="kanban-column" data-status="review">
@@ -122,7 +139,18 @@
       <!-- Table view -->
       <div class="glass-card" id="taskTableWrap" hidden>
         <table class="data-table" id="taskTable">
-          <thead><tr><th>Task</th><th>Project</th><th>Assignee</th><th>Priority</th><th>Status</th><th>Progress</th><th>Due</th><th></th></tr></thead>
+          <thead>
+            <tr>
+              <th>Task</th>
+              <th>Project</th>
+              <th>Assignee</th>
+              <th>Priority</th>
+              <th>Status</th>
+              <th>Progress</th>
+              <th>Due</th>
+              <th></th>
+            </tr>
+          </thead>
           <tbody id="taskTableBody"></tbody>
         </table>
       </div>
@@ -234,6 +262,77 @@
     </aside>
   </div>
 
+  <script>
+    (function () {
+      var id = new URLSearchParams(location.search).get('task');
+      if (!id) return;
+
+      function read(k) { try { return JSON.parse(localStorage.getItem(k) || '[]') || []; } catch (e) { return []; } }
+      function esc(s) {
+        return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
+          return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c];
+        });
+      }
+      function pick(o, keys) { for (var i = 0; i < keys.length; i++) if (o[keys[i]]) return o[keys[i]]; return ''; }
+
+      function run() {
+        var t = read('pt_tasks').find(function (x) { return String(x.id) === String(id); });
+        if (!t) { if (window.Swal) Swal.fire('Not found', 'This task no longer exists.', 'info'); return; }
+
+        // clear any filter so no status is hidden
+        document.querySelectorAll('select').forEach(function (s) {
+          if (/filter|status|priority|assignee|project/i.test(s.id || '')) {
+            s.value = ''; s.dispatchEvent(new Event('change', { bubbles: true }));
+          }
+        });
+        document.querySelectorAll('input[type="search"]').forEach(function (i) {
+          if (i.id !== 'globalSearch') { i.value = ''; i.dispatchEvent(new Event('input', { bubbles: true })); }
+        });
+
+        setTimeout(function () {
+          var opened = false;
+
+          // use the page's own detail panel if it has one
+          ['openDetail', 'openTaskDetail', 'showDetail', 'openDetailPanel'].forEach(function (fn) {
+            if (!opened && window.Tasks && typeof Tasks[fn] === 'function') {
+              try { Tasks[fn](t.id); opened = true; } catch (e) { }
+            }
+          });
+
+          // or click the card on the board
+          var card = document.querySelector('[data-id="' + id + '"], [data-task-id="' + id + '"]');
+          if (card) {
+            card.scrollIntoView({ block: 'center' });
+            card.style.outline = '3px solid #1e5aaa';
+            card.style.borderRadius = '12px';
+            if (!opened) card.click();
+            opened = true;
+          }
+
+          // fallback: the board doesn't show it (e.g. completed tasks) -> show details directly
+          if (!opened && window.Swal) {
+            var users = read('pt_users');
+            var who = users.find(function (u) { return u.id === (t.assigneeId || t.assignedTo || t.assignee); });
+            Swal.fire({
+              title: esc(t.title),
+              html:
+                '<div style="text-align:left;line-height:1.7">' +
+                '<b>Status:</b> ' + esc(t.status) + '<br>' +
+                '<b>Priority:</b> ' + esc(t.priority || '-') + '<br>' +
+                '<b>Deadline:</b> ' + esc(pick(t, ['dueDate', 'deadline', 'due', 'endDate']) || '-') + '<br>' +
+                '<b>Assigned to:</b> ' + esc(who ? (who.name || who.email) : '-') + '<br>' +
+                '<b>Progress:</b> ' + esc(t.progress != null ? t.progress + '%' : '-') + '<br><br>' +
+                esc(t.description || 'No description.') + '</div>',
+              confirmButtonText: 'Close'
+            });
+          }
+        }, 400);
+      }
+
+      document.addEventListener('DOMContentLoaded', function () { setTimeout(run, 100); });
+    })();
+  </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.15.2/Sortable.min.js"></script>
   <script src="js/data/storage.js"></script>
   <script src="js/data/seed.js"></script>
@@ -245,4 +344,5 @@
   <script src="js/tasks.js"></script>
   <script src="js/app.js"></script>
 </body>
+
 </html>

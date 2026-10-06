@@ -1,0 +1,27 @@
+{
+  "name": "projectpulse-server",
+  "version": "1.0.0",
+  "description": "ProjectPulse REST API + static file host (Express + PostgreSQL)",
+  "main": "src/index.js",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node src/index.js",
+    "db:init": "node src/init-db.js",
+    "db:seed-demo": "node src/seed-demo.js",
+    "create-user": "node src/create-user.js",
+    "test": "node --test test/api.test.js"
+  },
+  "dependencies": {
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^18.0.5",
+    "express": "^5.2.1",
+    "express-rate-limit": "^8.7.0",
+    "helmet": "^8.3.0",
+    "jsonwebtoken": "^9.0.3",
+    "pg": "^8.23.1"
+  }
+}
